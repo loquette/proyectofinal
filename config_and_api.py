@@ -58,3 +58,19 @@ def get_weather_recommendation(pais, ciudad, fecha, hora):
     except Exception as e:
         print(f"Error al obtener recomendación del clima: {e}")
         return 'No se puede obtener recomendación del clima.'
+
+        # Llamada a la API de OpenWeatherMap para obtener el clima actual
+        response = requests.get(f"http://api.openweathermap.org/data/2.5/weather?q={ciudad},{pais}&appid={WEATHER_API_KEY}")
+        data = response.json()
+        temp = data['main']['temp'] - 273.15  # Convertir de Kelvin a Celsius
+        
+        # Determinar la recomendación en función de la temperatura
+        if temp < 10:
+            return 'Clima frío, usa protector solar, guantes, botas, paraguas y ropa abrigada'
+        elif temp < 20:
+            return 'Clima templado, usa ropa cómoda, camiseta o camisa manga larga, protector solar, lleva abrigo para la tarde'
+        else:
+            return 'Clima caluroso, usa ropa ligera, protector solar, sombrero. Recuerda hidratarte'
+    except Exception as e:
+        print(f"Error al obtener recomendación del clima: {e}")
+        return 'No se puede obtener recomendación del clima.'
